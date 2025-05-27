@@ -22,15 +22,26 @@ public class ImageService {
                 );
     }
 
-    public ImageResponse generateImageOptions(String prompt){
+    public ImageResponse generateImageOptions(String prompt, String quality, int n, int width, int height){
+//        ImageResponse response = openAiImageModel.call(
+//                new ImagePrompt("A light cream colored mini golden doodle",
+//                        OpenAiImageOptions.builder()
+//                                .model("dall-e-2")
+//                                .quality("hd")
+//                                .N(4)
+//                                .height(1024)
+//                                .width(1024).build())
+//
+//        );
+
         ImageResponse response = openAiImageModel.call(
                 new ImagePrompt("A light cream colored mini golden doodle",
                         OpenAiImageOptions.builder()
                                 .model("dall-e-2")
-                                .quality("hd")
-                                .N(4)
-                                .height(1024)
-                                .width(1024).build())
+                                .quality(quality)
+                                .N(n)
+                                .height(height)
+                                .width(width).build())
 
         );
         return response;
