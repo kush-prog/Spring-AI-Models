@@ -1,6 +1,5 @@
 package com.kush.SpringAI.services;
 
-import jakarta.websocket.OnOpen;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
 import org.springframework.ai.openai.OpenAiImageModel;
@@ -9,40 +8,29 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ImageService {
-
     private final OpenAiImageModel openAiImageModel;
 
+    // Constructor for dependency injection
     public ImageService(OpenAiImageModel openAiImageModel) {
         this.openAiImageModel = openAiImageModel;
     }
 
-    public ImageResponse generateImage(String prompt){
-        return openAiImageModel.call(
-                new ImagePrompt(prompt)
-                );
+    // Method to generate a single image based on a prompt
+    public ImageResponse generateImage(String prompt) {
+        return openAiImageModel.call(new ImagePrompt(prompt));
     }
 
-    public ImageResponse generateImageOptions(String prompt, String quality, int n, int width, int height){
-//        ImageResponse response = openAiImageModel.call(
-//                new ImagePrompt("A light cream colored mini golden doodle",
-//                        OpenAiImageOptions.builder()
-//                                .model("dall-e-2")
-//                                .quality("hd")
-//                                .N(4)
-//                                .height(1024)
-//                                .width(1024).build())
-//
-//        );
-
+    // Method to generate multiple image options based on a prompt and specified parameters
+    public ImageResponse generateImageOptions(String prompt, String quality, int n, int width, int height) {
         ImageResponse response = openAiImageModel.call(
-                new ImagePrompt("A light cream colored mini golden doodle",
+                new ImagePrompt(prompt,
                         OpenAiImageOptions.builder()
                                 .model("dall-e-2")
                                 .quality(quality)
                                 .N(n)
                                 .height(height)
-                                .width(width).build())
-
+                                .width(width)
+                                .build())
         );
         return response;
     }

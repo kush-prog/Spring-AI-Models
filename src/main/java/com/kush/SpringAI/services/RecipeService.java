@@ -11,29 +11,28 @@ import java.util.Map;
 public class RecipeService {
     private final ChatModel chatModel;
 
+    // Constructor for dependency injection
     public RecipeService(ChatModel chatModel) {
         this.chatModel = chatModel;
     }
 
-    public String createRecipe(String ingredients,
-                               String cuisine,
-                               String dietaryRestrictions) {
+    // Method to create a recipe based on ingredients, cuisine, and dietary restrictions
+    public String createRecipe(String ingredients, String cuisine, String dietaryRestrictions) {
         var template = """
-                I want to create a recipe using the following ingredients: {ingredients}.
-                The cuisine type I prefer is {cuisine}.
-                Please consider the following dietary restrictions: {dietaryRestrictions}.
-                Please provide me with a detailed recipe including title, list of ingredients, and cooking instructions
-                """;
+            I want to create a recipe using the following ingredients: {ingredients}.
+            The cuisine type I prefer is {cuisine}.
+            Please consider the following dietary restrictions: {dietaryRestrictions}.
+            Please provide me with a detailed recipe including title, list of ingredients, and cooking instructions.
+            """;
 
         PromptTemplate promptTemplate = new PromptTemplate(template);
         Map<String, Object> params = Map.of(
-                "ingredients",ingredients,
+                "ingredients", ingredients,
                 "cuisine", cuisine,
                 "dietaryRestrictions", dietaryRestrictions
         );
 
         Prompt prompt = promptTemplate.create(params);
-        return chatModel.call(prompt).getResult().getOutput().getClass();
+        return chatModel.call(prompt).getResult().getOutput().getText();
     }
-
 }

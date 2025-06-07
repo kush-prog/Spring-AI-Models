@@ -10,23 +10,23 @@ import org.springframework.stereotype.Service;
 public class ChatService {
     private final ChatModel chatModel;
 
+    // Constructor for dependency injection
     public ChatService(ChatModel chatModel) {
         this.chatModel = chatModel;
     }
 
-    // Here a simple call is being made using the call method
-    // And this call is being overloaded
-    public String getResponse(String prompt){
+    // Method to get a simple response from the chat model using a prompt
+    public String getResponse(String prompt) {
         return chatModel.call(prompt);
     }
 
-    public ChatResponse getResponseOptions(String prompt){
+    // Method to get a detailed response with options from the chat model
+    public ChatResponse getResponseOptions(String prompt) {
         ChatResponse response = chatModel.call(
-                // here making use of Prompt object
-                // Passing the prompt and specifying some options.
+                // Creating a Prompt object with options
                 new Prompt(
                         prompt,
-                        // based on this options the output will be given
+                        // Specifying options for the chat model
                         OpenAiChatOptions.builder()
                                 .model("gpt-4o")
                                 .temperature(0.4)
