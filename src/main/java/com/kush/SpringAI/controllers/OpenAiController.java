@@ -1,4 +1,4 @@
-package com.kush.SpringAI;
+package com.kush.SpringAI.controllers;
 
 import com.kush.SpringAI.services.ChatService;
 import com.kush.SpringAI.services.ImageService;
