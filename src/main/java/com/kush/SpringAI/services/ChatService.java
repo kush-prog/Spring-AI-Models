@@ -28,8 +28,9 @@ public class ChatService {
                         prompt,
                         // Specifying options for the chat model
                         OpenAiChatOptions.builder()
-                                .model("gpt-4o")
+                                .model("llama3-70b-8192")
                                 .temperature(0.4)
+                                .maxTokens(200)
                                 .build()
                 ));
         return response;
