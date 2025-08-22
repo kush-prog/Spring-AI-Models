@@ -5,13 +5,12 @@ import com.kush.SpringAI.services.ImageService;
 import com.kush.SpringAI.services.RecipeService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ai.image.ImageResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("spring-ai")
@@ -29,9 +28,11 @@ public class OpenAiController {
     }
 
     // Endpoint to get a response from the AI chat service
-    @GetMapping("/ask-AI")
-    public String getResponse(@RequestParam String prompt) {
-        return chatService.getResponse(prompt);
+    @PostMapping("/ask-AI")
+    public ResponseEntity<String> getResponse(@RequestBody Map<String, String> prompt) {
+        String question = prompt.get("question");
+        String answer = chatService.getAnswer(question);
+        return ResponseEntity.ok(answer);
     }
 
     // Endpoint to generate a single image based on a prompt
